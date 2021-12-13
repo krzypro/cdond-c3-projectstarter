@@ -111,5 +111,7 @@ workflows:
           requires: [build-backend]
       - scan-backend:
           requires: [build-backend]
+          context: [SlackerContext]
       - scan-frontend:
           requires: [build-frontend]
+          context: [SlackerContext]
