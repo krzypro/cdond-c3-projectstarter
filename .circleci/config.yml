@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build-frontend:
     docker:
-      - image: cimg/node:17.2.0
+      - image: cimg/node:16.13.1
     steps:
       - checkout
       - restore_cache:
@@ -20,7 +20,7 @@ jobs:
 
   build-backend:
     docker:
-      - image: cimg/node:17.2.0
+      - image: cimg/node:16.13.1
     steps:
       - checkout
       - restore_cache:
