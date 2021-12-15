@@ -1,5 +1,21 @@
 version: 2.1
 
+commands:
+  destroy_env_on_fail:
+    steps:
+    - run:
+        name: destroy_backend_stack
+        when: on_fail
+        command: |
+          aws cloudformation delete-stack \
+            --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
+    - run:
+        name: destroy_frontend_stack
+        when: on_fail
+        command: |
+          aws cloudformation delete-stack \
+            --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
+
 jobs:
   build-frontend:
     docker:
@@ -93,6 +109,39 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
 
+  deploy-infrastructure:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run: yum install -y tar gzip
+      - run:
+          name: Ensure back-end infrastructure exists
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/backend.yml \
+              --tags project=udapeople \
+              --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+      - run:
+          name: Ensure front-end infrastructure exist
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/frontend.yml \
+              --tags project=udapeople \
+              --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+      - run:
+          name: Add back-end ip to ansible inventory
+          command: |
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> cdond-c3-projectstarter/.circleci/ansible/inventory.txt
+            exit 1
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - cdond-c3-projectstarter/.circleci/ansible/inventory.txt
+      - destroy_env_on_fail
+        
 workflows:
   default:
     jobs:
@@ -106,3 +155,5 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
