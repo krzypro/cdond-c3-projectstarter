@@ -164,6 +164,9 @@ jobs:
       #     command: |
       #       apk add --update awscli
       - run:
+          name: display inventory
+          command: cat .circleci/ansible/inventory.txt
+      - run:
           name: Run Playbook and Configure Server
           command: |
             ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml
