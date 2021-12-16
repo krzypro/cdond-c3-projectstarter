@@ -159,10 +159,10 @@ jobs:
           name: Install Ansible
           command: |
             apk add --update ansible
-      - run:
-          name: Install AWS Cli
-          command: |
-            apk add --update awscli
+      # - run:
+      #     name: Install AWS Cli
+      #     command: |
+      #       apk add --update awscli
       - run:
           name: Run Playbook and Configure Server
           command: |
