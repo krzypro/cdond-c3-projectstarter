@@ -8,15 +8,13 @@ commands:
         when: on_fail
         command: |
           aws cloudformation delete-stack \
-            --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --region=us-west-2
+            --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" 
     - run:
         name: destroy_frontend_stack
         when: on_fail
         command: |
           aws cloudformation delete-stack \
-            --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --region=us-west-2
+            --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
 
 jobs:
   build-frontend:
@@ -124,8 +122,7 @@ jobs:
               --template-file .circleci/files/backend.yml \
               --tags project=udapeople \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
-              --region=us-west-2 
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -133,8 +130,7 @@ jobs:
               --template-file .circleci/files/frontend.yml \
               --tags project=udapeople \
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
-              --region=us-west-2
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
       - run:
           name: Add back-end ip to ansible inventory
           command: |
@@ -164,10 +160,13 @@ jobs:
           command: |
             apk add --update ansible
       - run:
+          name: Install AWS Cli
+          command: |
+            apk add --update awscli
+      - run:
           name: Run Playbook and Configure Server
           command: |
-            # ansible-playbook -i inventory.txt main4.yml   
-            exit 1
+            ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml
 
 workflows:
   default:
