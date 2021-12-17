@@ -210,12 +210,12 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update tar gzip
-            apt -y update && apt install node npm
+            yum install -y tar gzip
+            yum install -y node npm
       - run:
           name: "Install python for Ansible"
           command: |
-            test -e /usr/bin/python3 || (apt -y update && apt install -y python3)
+            test -e /usr/bin/python3 || (yum install -y python3)
       - attach_workspace:
           at: ./
       - restore_cache:
