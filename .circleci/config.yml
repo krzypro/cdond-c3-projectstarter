@@ -214,10 +214,14 @@ jobs:
       - run:
           name: Install Node.js and Npm
           command: |
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
-            . ~/.nvm/nvm.sh
-            nvm install node
-            node -e "console.log('Running Node.js ' + process.version)"
+            sudo amazon-linux-extras install epel
+            sudo yum install nodejs npm
+            node -v
+            npm -v
+            # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+            # . ~/.nvm/nvm.sh
+            # nvm install node
+            # node -e "console.log('Running Node.js ' + process.version)"
 
       - run:
           name: "Install python for Ansible"
