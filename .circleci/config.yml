@@ -207,18 +207,19 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - attach_workspace:
-          at: ./
-      - restore_cache:
-          keys: [frontend-build]
       - run:
           name: Install dependencies
           command: |
+            apk add --update tar gzip
             apt -y update && apt install node npm
       - run:
           name: "Install python for Ansible"
           command: |
             test -e /usr/bin/python3 || (apt -y update && apt install -y python3)
+      - attach_workspace:
+          at: ./
+      - restore_cache:
+          keys: [frontend-build]
       - run:
           name: Get backend url
           command: |
