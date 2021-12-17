@@ -214,8 +214,8 @@ jobs:
       - run:
           name: Install Node.js and Npm
           command: |
-            sudo amazon-linux-extras install epel
-            sudo yum install nodejs npm
+            amazon-linux-extras install epel
+            yum install nodejs npm
             node -v
             npm -v
             # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
