@@ -32,6 +32,13 @@
         path: /var/www/web
         state: directory
 
+-   name: Folder orient
+    shell: |
+        ls .
+        ls ../
+        ls ../../
+        ls ../.../backend/
+
 -   name: "Copy index page"
     copy:
         src: ../../backend/artifact.tar.gz
