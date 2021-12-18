@@ -228,11 +228,11 @@ jobs:
             pip3 install --upgrade pip
             pip3 install --no-cache-dir awscli
             aws --version
-      - run:
-          name: Run playbook and configure deploy agent
-          command: |
-            cd .circleci/ansible
-            ansible-playbook configure-deploy-agent.yml
+      # - run:
+      #     name: Run playbook and configure deploy agent
+      #     command: |
+      #       cd .circleci/ansible
+      #       ansible-playbook configure-deploy-agent.yml
       - attach_workspace:
           at: ./
       - restore_cache:
