@@ -207,11 +207,11 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
+      - run: apk -U upgrade
       - run:
           name: Install dependencies
           command: |
             apk add --update tar gzip
-            apk add --update python3-apt
       - run:
           name: Install Ansible
           command: |
@@ -219,7 +219,7 @@ jobs:
       - run:
           name: Install AWS Cli
           command: |
-            apk add --no-cache python3 py3-pip 
+            apk add --no-cache --update python3 py3-pip 
             pip3 install --upgrade pip
             pip3 install --no-cache-dir awscli
             aws --version
