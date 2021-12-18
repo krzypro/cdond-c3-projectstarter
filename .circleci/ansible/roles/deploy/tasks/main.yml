@@ -34,7 +34,7 @@
 
 -   name: "Copy artifact page"
     copy:
-        src: ../../artifact1.tar.gz
+        src: ../../artifact.tar.gz
         dest: /var/www/web/artifact.tar.gz
         backup: yes
 
