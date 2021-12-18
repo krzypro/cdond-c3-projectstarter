@@ -32,9 +32,9 @@
         path: /var/www/web
         state: directory
 
--   name: "Copy index page"
+-   name: "Copy artifact page"
     copy:
-        src: ../../artifact.tar.gz
+        src: ../../artifact1.tar.gz
         dest: /var/www/web/artifact.tar.gz
         backup: yes
 
