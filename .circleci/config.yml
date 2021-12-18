@@ -218,7 +218,7 @@ jobs:
       - run:
           name: Install AWS Cli
           command: |
-            apt add python3-pip
+            apk add python3-pip
             apk add --update awscli # && aws --version
       - run:
           name: Run playbook and configure deploy agent
