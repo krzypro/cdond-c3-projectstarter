@@ -211,6 +211,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update tar gzip
+            apk add --update python3-apt
       - run:
           name: Install Ansible
           command: |
