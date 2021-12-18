@@ -43,7 +43,7 @@
         cd /var/www/web
         ls
         tar -czvf artifact.tar.gz
-        rm artifact.tar.gz
+        # rm artifact.tar.gz
 
 -   name:   Start application
     shell: |
