@@ -1,0 +1,12 @@
+---
+
+- name: "Configure deployment agent." 
+  hosts: localhost
+  connection: local
+  become: true
+  become_method: sudo
+  become_user: root  
+  gather_facts: false
+
+  roles:
+    - configure-server
