@@ -15,6 +15,15 @@ commands:
         command: |
           aws cloudformation delete-stack \
             --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
+  revert_migrations_on_fail:
+    steps:
+    - run:
+        name: revert_migrations
+        when: on_fail
+        command: |
+          cd backend
+          npm install
+          npm run migrations:revert
 
 jobs:
   build-frontend:
@@ -184,7 +193,6 @@ jobs:
             cd backend
             npm install
             npm run migrations > migrations_dump.txt
-            exit 0
       - run:
           name: Send migration results to memstash
           command: |
@@ -194,13 +202,7 @@ jobs:
             then
               curl -H "Content-Type: text/plain" -H "token: 059a3023-e864-4f49-b715-f36bb6e6eb05" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
             fi
-      - run:
-          name: Revert migrations on fail
-          when: on_fail
-          command: |
-            cd backend
-            npm install
-            npm run migrations:revert
+      - revert_migrations_on_fail
 
   deploy-frontend:
     docker:
@@ -212,10 +214,6 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update tar gzip
-      # - run:
-      #     name: Install Ansible
-      #     command: |
-      #       apk add --update ansible
       - run:
           name: Install Node.js and npm
           command: |
@@ -228,11 +226,6 @@ jobs:
             pip3 install --upgrade pip
             pip3 install --no-cache-dir awscli
             aws --version
-      # - run:
-      #     name: Run playbook and configure deploy agent
-      #     command: |
-      #       cd .circleci/ansible
-      #       ansible-playbook configure-deploy-agent.yml
       - attach_workspace:
           at: ./
       - restore_cache:
@@ -253,7 +246,53 @@ jobs:
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-      # Here's where you will add some code to rollback on failure   
+      - revert_migrations_on_fail  
+      - destroy_env_on_fail
+
+deploy-backend:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - run: apk -U upgrade
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update tar gzip
+      - run:
+          name: Install Node.js and npm
+          command: |
+            apk add --update nodejs
+            apk add --update npm
+      - run:
+          name: Install AWS Cli
+          command: |
+            apk add --no-cache --update python3 py3-pip 
+            pip3 install --upgrade pip
+            pip3 install --no-cache-dir awscli
+            aws --version
+      - run:
+          name: Install Ansible
+          command: |
+            apk add --update ansible
+      - add_ssh_keys:
+          fingerprints: ["9b:3b:f4:22:4c:e6:79:ca:45:13:c2:88:11:80:da:2a"]
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Deploy backend
+          command: |
+            cd backend
+            npm i
+            npm run build
+            cd ..
+            # Zip the directory
+            tar -C backend -czvf artifact.tar.gz .
+            cd .circleci/ansible
+            echo "Contents of the inventory.txt file is -------"
+            cat inventory.txt
+            ansible-playbook -i inventory.txt deploy-backend.yml
+      # Here's where you will add some code to rollback on failure 
 
 workflows:
   default:
@@ -277,3 +316,5 @@ workflows:
       - deploy-frontend:
           requires: [configure-infrastructure]
           # requires: [run-migrations]
+      - deploy-backend:
+          requires: [configure-infrastructure]

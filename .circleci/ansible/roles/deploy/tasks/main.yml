@@ -1,0 +1,49 @@
+---
+# -   name: "Update apt packages"
+#     become: yes
+#     apt:
+#         update_cache: yes
+
+# -   name: "Update packages"
+#     become: yes
+#     apt:
+#         upgrade: yes
+
+# -   name: "Remove dependencies that are no longer required"
+#     become: yes
+#     apt:
+#         autoremove: yes
+
+# -   name: "Install nodejs & npm"
+#     become: true
+#     apt:
+#         name: ["nodejs", "npm"]
+#         state: latest
+#         update_cache: yes
+
+# -   name: "Install PM2 daemon"
+#     become: true
+#     npm:
+#         name: pm2
+#         global: yes
+
+-   name: Creates directory
+    file:
+        path: /var/www/web
+        state: directory
+
+-   name: "Copy index page"
+    copy:
+        src: ../../backend/artifact.tar.gz
+        dest: /var/www/web/artifact.tar.gz
+        backup: yes
+
+-   name:   Extract application
+    shell: |
+        cd /var/www/web
+        tar -czvf artifact.tar.gz
+        rm artifact.tar.gz
+
+-   name:   Start application
+    shell: |
+        pm2 start /var/www/web/index.js -f
