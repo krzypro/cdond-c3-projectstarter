@@ -41,10 +41,9 @@
 -   name:   Extract application
     shell: |
         cd /var/www/web
-        ls
-        # tar -czvf artifact.tar.gz
-        # rm artifact.tar.gz
+        tar -xvf artifact.tar.gz
+        rm artifact.tar.gz
 
 -   name:   Start application
     shell: |
-        pm2 start /var/www/web/index.js -f
+        pm2 start /var/www/web/dist/main.js -f
