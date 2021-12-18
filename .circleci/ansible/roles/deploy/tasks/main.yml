@@ -32,22 +32,16 @@
         path: /var/www/web
         state: directory
 
--   name: Folder orient
-    shell: |
-        ls .
-        ls ../
-        ls ../../
-        ls ../../backend/
-
 -   name: "Copy index page"
     copy:
-        src: ../../backend/artifact.tar.gz
+        src: ../../artifact.tar.gz
         dest: /var/www/web/artifact.tar.gz
         backup: yes
 
 -   name:   Extract application
     shell: |
         cd /var/www/web
+        ls
         tar -czvf artifact.tar.gz
         rm artifact.tar.gz
 
