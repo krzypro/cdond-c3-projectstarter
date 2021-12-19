@@ -52,8 +52,12 @@
 
 -   name: Output echo 2
     ansible.builtin.debug:
+        msg:
+        -   "value from var: $TYPEORM_MIGRATIONS"
+
+-   name: Output echo 3
+    ansible.builtin.debug:
         var: out
-        verbosity: 2
 
 -   name:   Extract application
     shell: |
