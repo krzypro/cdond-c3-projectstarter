@@ -33,8 +33,8 @@
   - debug: var=out.stdout
 
 
-  - name: say $TYPEORM_MIGRATIONS2
-    command: echo $TYPEORM_MIGRATIONS2
+  - name: say env
+    command: env
     register: out
 
   - debug: var=out.stdout
