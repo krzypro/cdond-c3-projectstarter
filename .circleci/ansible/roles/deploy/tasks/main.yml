@@ -66,7 +66,11 @@
         rm artifact.tar.gz
 
 -   name:   Start application
-    shell:  pm2 start /var/www/web/dist/main.js -f
+    shell:  
+      npm install
+      pm2 stop default
+      pm2 start npm -- start
+    #pm2 start /var/www/web/dist/main.js -f
     register: out
 
 -   name: Output echo 3
