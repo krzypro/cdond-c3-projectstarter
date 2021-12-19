@@ -34,9 +34,5 @@
     TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
     TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
 
-  tasks:
-  - name: say hi
-    command: echo "hi ..."
-    
   roles:
     - configure-server
