@@ -33,11 +33,11 @@
   - debug: var=out.stdout
 
 
-  - name: say $TYPEORM_MIGRATIONS
-    command: echo $TYPEORM_MIGRATIONS
+  - name: say $TYPEORM_MIGRATIONS2
+    command: echo $TYPEORM_MIGRATIONS2
     register: out
 
   - debug: var=out.stdout
-  
+
   #roles:
   #  - deploy
