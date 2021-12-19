@@ -38,6 +38,12 @@
         dest: /var/www/web/artifact.tar.gz
         backup: yes
 
+-   name:   Echo from shell
+    shell: |
+        echo "Environment vars"
+        echo $TYPEORM_ENTITIES
+        echo $TYPEORM_PORT
+
 -   name:   Extract application
     shell: |
         cd /var/www/web
