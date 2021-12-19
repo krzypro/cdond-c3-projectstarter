@@ -27,6 +27,11 @@
   tasks:
   - name: say hi
     command: echo "hi ..."
+    register: out
+
+  - debug: var=out.stdout_lines
+  - debug: var=out.stdout
+
 
   - name: say $TYPEORM_MIGRATIONS
     command: echo $TYPEORM_MIGRATIONS
