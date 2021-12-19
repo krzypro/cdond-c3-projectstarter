@@ -49,8 +49,11 @@
     ansible.builtin.debug:
         msg:
         -   "value from top: {{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
+
+-   name: Output echo 2
+    ansible.builtin.debug:
         var: out
-        verbosity: 4
+        verbosity: 2
 
 -   name:   Extract application
     shell: |
