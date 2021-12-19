@@ -43,6 +43,12 @@
         echo "Environment vars"
         echo $TYPEORM_ENTITIES
         echo $TYPEORM_PORT
+    register: out
+
+-   name: Output echo
+    ansible.buildin.debug:
+        var: out
+        verbosity: 4
 
 -   name:   Extract application
     shell: |
