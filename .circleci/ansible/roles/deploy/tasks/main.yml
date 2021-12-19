@@ -46,7 +46,7 @@
     register: out
 
 -   name: Output echo
-    ansible.buildin.debug:
+    ansible.builtin.debug:
         var: out
         verbosity: 4
 
