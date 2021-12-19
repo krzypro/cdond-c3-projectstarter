@@ -43,8 +43,7 @@
     - deploy
 
   post_tasks:
-    run:
-      name: start app in post_tasks
+  -   name: start app in post_tasks
       command: |
         cd /var/www/web
         npm install
