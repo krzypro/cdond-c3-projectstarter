@@ -39,7 +39,7 @@
         backup: yes
 
 -   name:   Echo from shell
-    shell: |
+    command: |
         echo "Environment vars"
         echo $TYPEORM_ENTITIES
         echo $TYPEORM_PORT
