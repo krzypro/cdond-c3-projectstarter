@@ -38,26 +38,26 @@
         dest: /var/www/web/artifact.tar.gz
         backup: yes
 
--   name:   Echo from shell
-    command: |
-        echo "Environment vars"
-        echo $TYPEORM_ENTITIES
-        echo $TYPEORM_PORT
-    register: out
+# -   name:   Echo from shell
+#     command: |
+#         echo "Environment vars"
+#         echo $TYPEORM_ENTITIES
+#         echo $TYPEORM_PORT
+#     register: out
 
--   name: Output echo
-    ansible.builtin.debug:
-        msg:
-        -   "value from top: {{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
+# -   name: Output echo
+#     ansible.builtin.debug:
+#         msg:
+#         -   "value from top: {{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
 
--   name: Output echo 2
-    ansible.builtin.debug:
-        msg:
-        -   "value from var: $TYPEORM_MIGRATIONS"
+# -   name: Output echo 2
+#     ansible.builtin.debug:
+#         msg:
+#         -   "value from var: $TYPEORM_MIGRATIONS"
 
--   name: Output echo 3
-    ansible.builtin.debug:
-        var: out
+# -   name: Output echo 3
+#     ansible.builtin.debug:
+#         var: out
 
 -   name:   Extract application
     shell: |
@@ -66,5 +66,9 @@
         rm artifact.tar.gz
 
 -   name:   Start application
-    shell: |
-        pm2 start /var/www/web/dist/main.js -f
+    shell:  pm2 start /var/www/web/dist/main.js -f
+    register: out
+
+-   name: Output echo 3
+    ansible.builtin.debug:
+        var: out
