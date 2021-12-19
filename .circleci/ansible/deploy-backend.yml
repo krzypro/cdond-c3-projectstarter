@@ -35,6 +35,9 @@
 
   - name: say $TYPEORM_MIGRATIONS
     command: echo $TYPEORM_MIGRATIONS
-    
+    register: out
+
+  - debug: var=out.stdout
+  
   #roles:
   #  - deploy
