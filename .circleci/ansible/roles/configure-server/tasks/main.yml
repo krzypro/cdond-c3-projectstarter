@@ -48,10 +48,10 @@
 
 - name: "Install node.js"
   become: yes
-  shell: '. {{ home_dir }}/.nvm/nvm.sh && nvm install 13'
+  shell: '. ~/.nvm/nvm.sh && nvm install 13'
   args:
     executable: /bin/bash
-    chdir: "{{ home_dir }}"
+    # chdir: "{{ home_dir }}"
 
 - name: "install pm2"
   become: yes
