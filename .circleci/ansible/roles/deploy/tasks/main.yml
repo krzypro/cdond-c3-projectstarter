@@ -66,7 +66,7 @@
         rm artifact.tar.gz
 
 -   name:   Start application
-    shell:  
+    shell:  |
       cd /var/www/web
       npm install
       pm2 stop default
