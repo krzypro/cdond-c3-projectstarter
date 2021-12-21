@@ -24,7 +24,7 @@
   become: yes
   shell: >
     cd {{ home_dir }}
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+    sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
   args:
     executable: /bin/bash
     chdir: "{{ home_dir }}"
