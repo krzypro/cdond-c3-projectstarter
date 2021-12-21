@@ -20,6 +20,17 @@
     state: latest
     update_cache: yes
 
+- name: "Output path"
+  become: yes
+  shell: >
+    echo < (cat /dev/null)
+  register: out
+
+- name: Output echo 3
+  ansible.builtin.debug:
+    var: out
+    
+        
 - name: "Install nvm"
   become: yes
   shell: >
