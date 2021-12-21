@@ -20,6 +20,12 @@
     state: latest
     update_cache: yes
 
+- name: "Install nvm"
+  command: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+- name: "Install node.js"
+  command: nvm install 13
+
 - name: "install pm2"
   become: yes
   npm:
