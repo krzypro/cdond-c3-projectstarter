@@ -21,6 +21,7 @@
     update_cache: yes
 
 - name: "Install nvm"
+  become: yes
   shell: >
     cd {{ home_dir }}
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
@@ -30,6 +31,7 @@
     creates: "{{ home_dir }}/.nvm/nvm.sh"
 
 - name: "Install node.js"
+  become: yes
   shell: '. {{ home_dir }}/.nvm/nvm.sh && nvm install 13'
   args:
     executable: /bin/bash
