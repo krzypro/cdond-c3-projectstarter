@@ -20,26 +20,31 @@
     state: latest
     update_cache: yes
 
-- name: "Output path"
-  become: yes
-  shell: >
-    echo < (cat /dev/null)
-  register: out
+# - name: "Output path"
+#   become: yes
+#   shell: >
+#     echo < (cat /dev/null)
+#   register: out
 
-- name: Output echo 3
-  ansible.builtin.debug:
-    var: out
-    
+# - name: Output echo 3
+#   ansible.builtin.debug:
+#     var: out
+
         
 - name: "Install nvm"
   become: yes
   shell: >
     cd {{ home_dir }}
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | sudo bash
+  register: out
   args:
     executable: /bin/bash
     chdir: "{{ home_dir }}"
     creates: "{{ home_dir }}/.nvm/nvm.sh"
+
+- name: Output echo 3
+  ansible.builtin.debug:
+    var: out
 
 - name: "Install node.js"
   become: yes
