@@ -34,7 +34,7 @@
 - name: "Install nvm"
   become: yes
   shell: >
-    cd /home/ubuntu
+    cd /home/ubuntu &
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | sudo bash
   register: out
   args:
