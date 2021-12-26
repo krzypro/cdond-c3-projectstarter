@@ -32,7 +32,7 @@
 
         
 - name: "Install nvm"
-  # become: yes
+  become: no
   shell: >
     cd /home/ubuntu &&
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
@@ -47,7 +47,7 @@
     var: out
 
 - name: "Install node.js"
-  become: yes
+  become: no
   shell: '. ~/.nvm/nvm.sh && nvm install 13 && source ~/.bash_profile && npm -v && node -v'
   register: out2
   args:
@@ -59,7 +59,7 @@
     var: out2
 
 - name: "install pm2"
-  become: yes
+  become: no
   npm:
     name: pm2
     global: yes
