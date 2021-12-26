@@ -48,7 +48,7 @@
 
 - name: "Install node.js"
   become: yes
-  shell: '. ~/.nvm/nvm.sh && nvm install 13'
+  shell: '. ~/.nvm/nvm.sh && nvm install 13 && source ~/.bash_profile && npm -v && node -v'
   register: out2
   args:
     executable: /bin/bash
@@ -65,3 +65,8 @@
     global: yes
     production: yes
     state: present
+  register: out3
+
+- name: Output 3 echo
+  ansible.builtin.debug:
+    var: out3
