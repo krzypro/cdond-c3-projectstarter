@@ -14,9 +14,9 @@
     autoremove: yes
 
 - name: "Install nvm"
-  become: no
+  become: yes
   shell: >
-    cd /home/ubuntu &&
+    # cd /home/ubuntu &&
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash &&
     export NVM_DIR="$HOME/.nvm" && 
     \. "$NVM_DIR/nvm.sh" &&
@@ -34,7 +34,7 @@
     var: out
 
 - name: "Install node.js"
-  become: no
+  become: yes
   shell: '. ~/.nvm/nvm.sh && nvm install 13 && npm -v && node -v'
   register: out2
   args:
@@ -46,7 +46,7 @@
     var: out2
 
 - name: "install pm2"
-  become: no
+  become: yes
   shell: >
     export NVM_DIR="$HOME/.nvm" && 
     \. "$NVM_DIR/nvm.sh" &&
