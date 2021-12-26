@@ -55,6 +55,8 @@
   #   production: yes
   #   state: present
   register: out3
+  args:
+    executable: /bin/bash
 
 - name: Output 3 echo
   ansible.builtin.debug:
