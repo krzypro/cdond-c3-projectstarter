@@ -48,7 +48,7 @@
 
 - name: "Install node.js"
   become: no
-  shell: '. ~/.nvm/nvm.sh && nvm install 13 && source ~/.bash_profile && npm -v && node -v'
+  shell: '. ~/.nvm/nvm.sh && nvm install 13 && npm -v && node -v'
   register: out2
   args:
     executable: /bin/bash
