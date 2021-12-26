@@ -13,29 +13,16 @@
   apt:
     autoremove: yes
 
-# - name: "install dependencies"
-#   become: yes
-#   apt:
-#     name: ["nodejs", "npm"]
-#     state: latest
-#     update_cache: yes
-
-# - name: "Output path"
-#   become: yes
-#   shell: >
-#     echo < (cat /dev/null)
-#   register: out
-
-# - name: Output echo 3
-#   ansible.builtin.debug:
-#     var: out
-
-        
 - name: "Install nvm"
   become: no
   shell: >
     cd /home/ubuntu &&
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash &&
+    export NVM_DIR="$HOME/.nvm" && 
+    \. "$NVM_DIR/nvm.sh" &&
+    \. "$NVM_DIR/bash_completion"  
+
+
   register: out
   args:
     executable: /bin/bash
