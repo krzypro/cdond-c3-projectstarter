@@ -42,16 +42,21 @@
     chdir: "{{ home_dir }}"
     creates: "{{ home_dir }}/.nvm/nvm.sh"
 
-- name: Output echo 3
+- name: Output echo
   ansible.builtin.debug:
     var: out
 
 - name: "Install node.js"
   # become: yes
   shell: '. ~/.nvm/nvm.sh && nvm install 13'
+  register: out2
   args:
     executable: /bin/bash
     # chdir: "{{ home_dir }}"
+
+- name: Output 2 echo
+  ansible.builtin.debug:
+    var: out2
 
 - name: "install pm2"
   become: yes
