@@ -47,7 +47,10 @@
 
 - name: "install pm2"
   become: no
-  shell: npm install pm2 -g
+  shell: >
+    export NVM_DIR="$HOME/.nvm" && 
+    \. "$NVM_DIR/nvm.sh" &&
+    \. "$NVM_DIR/bash_completion"  && npm install pm2 -g
 
   # npm:
   #   name: pm2
