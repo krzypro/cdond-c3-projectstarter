@@ -47,7 +47,7 @@
     var: out
 
 - name: "Install node.js"
-  # become: yes
+  become: yes
   shell: '. ~/.nvm/nvm.sh && nvm install 13'
   register: out2
   args:
