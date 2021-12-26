@@ -67,6 +67,9 @@
 
 -   name:   Start application
     shell:  |
+      export NVM_DIR="$HOME/.nvm" && 
+        \. "$NVM_DIR/nvm.sh" &&
+        \. "$NVM_DIR/bash_completion"  
       cd /var/www/web
       npm install
       pm2 stop default
