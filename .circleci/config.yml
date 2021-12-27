@@ -7,7 +7,7 @@ commands:
         name: destroy_backend_stack
         when: on_fail
         command: |
-          aws s3 rm dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+          aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
           aws cloudformation delete-stack \
             --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" 
     - run:
@@ -260,7 +260,6 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update tar gzip
-            apk add --update curl
       - run:
           name: Install Node.js and npm
           command: |
@@ -307,6 +306,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update tar gzip
+            apk add --update curl
       - run:
           name: Install Node.js and npm
           command: |
