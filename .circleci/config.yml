@@ -397,23 +397,26 @@ jobs:
             for i in ${STACKS[@]}; do
               export OldWorkflowID=$(echo $i | awk -F- '{print $3}')
               echo $OldWorkflowID
+
+              if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
+              then
+                echo "Current ID: ${CIRCLE_WORKFLOW_ID:0:7}"
+                echo "Remove old: ${OldWorkflowID}"
+                aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+                aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
+                aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
+              else
+                echo "Current ${CIRCLE_WORKFLOW_ID:0:7}"
+                echo "Dont remove ${OldWorkflowID}"
+              fi
+
             done
 
             # export OldWorkflowID=$(aws cloudformation \
             #         list-exports --query "Exports[?Name=='WorkflowID'].Value" \
             #         --no-paginate --output text) # | awk -F- '{print $2}')
 
-            # if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
-            # then
-            #   echo "Current ID: ${CIRCLE_WORKFLOW_ID:0:7}"
-            #   echo "Remove old: ${OldWorkflowID}"
-            #   aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-            #   aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
-            #   aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
-            # else
-            #   echo "Current ${CIRCLE_WORKFLOW_ID:0:7}"
-            #   echo "Dont remove ${OldWorkflowID}"
-            # fi
+            
 
 workflows:
   default:
