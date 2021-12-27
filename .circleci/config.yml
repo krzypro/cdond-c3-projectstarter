@@ -395,7 +395,7 @@ jobs:
               --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
 
             for i in ${STACKS[@]}; do
-              echo $i
+              echo $i | awk -F- '{print $3}'
             done
 
             # export OldWorkflowID=$(aws cloudformation \
