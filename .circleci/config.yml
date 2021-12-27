@@ -394,8 +394,10 @@ jobs:
 
             if [[ "${CIRCLE_WORKFLOW_ID:0:7}" =~ "${OldWorkflowID}" ]]
             then
+              echo "Current ${CIRCLE_WORKFLOW_ID:0:7}"
               echo "Remove ${OldWorkflowID}"
             else
+              echo "Current ${CIRCLE_WORKFLOW_ID:0:7}"
               echo "Dont remove ${OldWorkflowID}"
             fi
 
