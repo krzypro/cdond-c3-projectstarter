@@ -193,15 +193,15 @@ jobs:
             cd backend
             npm install
             npm run migrations > migrations_dump.txt
-      - run:
-          name: Send migration results to memstash
-          command: |
-            cd backend
-            cat migrations_dump.txt
-            if grep -q "has been executed successfully." migrations_dump.txt
-            then
-              curl -H "Content-Type: text/plain" -H "token: 059a3023-e864-4f49-b715-f36bb6e6eb05" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
-            fi
+      # - run:
+      #     name: Send migration results to memstash
+      #     command: |
+      #       cd backend
+      #       cat migrations_dump.txt
+      #       if grep -q "has been executed successfully." migrations_dump.txt
+      #       then
+      #         curl -H "Content-Type: text/plain" -H "token: 059a3023-e864-4f49-b715-f36bb6e6eb05" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
+      #       fi
       - revert_migrations_on_fail
 
   deploy-frontend:
@@ -298,22 +298,22 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
+      # - build-frontend
+      # - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
+      # - deploy-infrastructure:
+      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      - run-migrations # :
+          # requires: [configure-infrastructure]
       - deploy-frontend:
           # requires: [configure-infrastructure]
           requires: [run-migrations]
