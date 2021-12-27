@@ -60,7 +60,7 @@ export class AppLogger implements LoggerService {
       transports.push(slackTransport);
     }
 
-    winston.createLogger({
+    this.logger = winston.createLogger({
       transports,
     });
   }
