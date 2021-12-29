@@ -1,2 +1,2 @@
 URL01: https://github.com/krzypro/cdond-c3-projectstarter
-URL02: https://udapeople-962bfc9.s3-us-west-2.amazonaws.com/index.html
+URL02: http://udapeople-962bfc9.s3-us-west-2.amazonaws.com/index.html
